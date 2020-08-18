@@ -1,0 +1,74 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]='vForm'>
+                <div class="form-group">
+                  <label for="city">City</label>
+                  <input type="text" class="form-control" formControlName='city' required>
+                </div>
+
+                <div *ngIf="f.city.touched && f.city.invalid" class="danger">
+                  <div *ngIf="f.city.errors.required">City name is required.</div>
+              </div>
+
+                <div class="form-group">
+                    <label for="PAN">PAN Number</label>
+                    <input type="text" class="form-control" formControlName='panNumber' required>
+                  </div>
+
+                  <div *ngIf="f.panNumber.touched && f.panNumber.invalid" class="danger">
+                    <div *ngIf="f.panNumber.errors.required">PAN Number is required.</div>
+                    <div *ngIf="f.panNumber.errors.pattern">Please, Enter Valid PAN card Number.</div>
+                </div>
+
+                  <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" class="form-control" formControlName='fullname' required>
+                  </div>
+
+                  <div *ngIf="f.fullname.touched && f.fullname.invalid" class="danger">
+                    <div *ngIf="f.fullname.errors.required">Full name is required.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" formControlName='email' required>
+                  </div>
+                  <div *ngIf="f.email.touched && f.email.invalid" class="danger">
+                    <div *ngIf="f.email.errors.required">Email is required.</div>
+                    <div *ngIf="f.email.errors.email">Please, Enter valid email.</div>
+                </div>
+
+                  <div class="form-group">
+                    <label for="mobile">Mobile</label>
+                    <input type="text" maxlength="10" (keypress)="isNumberKey($event)"
+                     class="form-control" formControlName='mobile' (input)="callGetOTP(vForm.value)" required>
+
+                  </div>
+                  <div *ngIf="f.mobile.touched && f.mobile.invalid" class="danger">
+                    <div *ngIf="f.mobile.errors.required">Mobile Number is required.</div>
+                    <div *ngIf="f.mobile.errors.pattern">Please, Enter 10 digit Mobile Number.</div>
+                </div>
+                
+                  <div class="form-group" *ngIf="f.mobile.valid">
+                    <label style="display: block;" for="otp">OTP</label>
+                    <input type="text" 
+                    style="display: inline-block;" 
+                    class="form-control" 
+                    (input)="callVerifyOTP({mobile:f.mobile.value,otp:f.otp.value})"
+                    formControlName = 'otp'
+                    (keypress)="isNumberKey($event)"
+                    maxlength="4">
+                   <button [disabled]="!flagForOtp" >Resend Otp</button>
+                  </div>
+                  
+                  <div *ngIf="f.otp.touched && f.otp.invalid" class="danger">
+                    <div *ngIf="f.otp,errors">Please, Enter 4 digit OTP Mobile Number.</div>
+                </div>
+                  
+
+                <!-- <button type="submit" class="btn btn-primary" [disabled]='!vForm.valid'>Submit</button> -->
+              </form>
+        </div>
+    </div>
+</div>
